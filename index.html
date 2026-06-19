@@ -863,6 +863,366 @@ tbody tr:last-child td { border-bottom: none; }
 .empty-state p { font-size: 14px; }
 
 /* ============================================
+   CEK PASIEN — LOGIN PAGE
+   ============================================ */
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.btn-patient-check {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font);
+  border: 2px solid var(--primary-light);
+  border-radius: var(--radius);
+  background: var(--primary-50);
+  color: var(--primary-dark);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-patient-check:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   CEK PASIEN — PUBLIK PAGE
+   ============================================ */
+#patient-check-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 50%, #f0fdf4 100%);
+  padding: 24px;
+}
+
+.patient-check-hero {
+  text-align: center;
+  padding: 40px 20px 32px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.patient-check-hero .hero-icon {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, var(--primary), #06b6d4);
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: #fff;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 24px rgba(13,148,136,0.25);
+  animation: heroFloat 3s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.patient-check-hero h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.patient-check-hero p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.patient-search-card {
+  max-width: 480px;
+  margin: 0 auto 32px;
+  background: #fff;
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+}
+
+.patient-search-form {
+  display: flex;
+  gap: 10px;
+}
+
+.patient-search-form input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-family: var(--font);
+  color: var(--text);
+  transition: var(--transition);
+}
+
+.patient-search-form input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(13,148,136,0.1);
+}
+
+.patient-search-form button {
+  padding: 12px 24px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.patient-search-form button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.patient-search-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.patient-result-area {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.patient-info-card {
+  background: #fff;
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  margin-bottom: 20px;
+  border-top: 4px solid var(--primary);
+}
+
+.patient-info-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.patient-avatar-lg {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-light), #a7f3d0);
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.patient-info-name h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.patient-info-name p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.patient-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.info-item {
+  padding: 12px;
+  background: var(--bg);
+  border-radius: var(--radius);
+}
+
+.info-item .info-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-item .info-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 4px;
+}
+
+.patient-summary-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.summary-stat {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+.summary-stat:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+.summary-stat .ss-value {
+  font-size: 28px;
+  font-weight: 800;
+}
+.summary-stat .ss-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.summary-stat.teal .ss-value { color: var(--primary); }
+.summary-stat.green .ss-value { color: var(--success); }
+.summary-stat.amber .ss-value { color: #d97706; }
+.summary-stat.blue .ss-value { color: var(--info); }
+
+.patient-history-card {
+  background: #fff;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.patient-history-card .card-header {
+  background: var(--bg);
+}
+
+.patient-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: #fff;
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 16px;
+}
+.patient-back-btn:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.patient-error {
+  text-align: center;
+  padding: 40px 24px;
+  color: var(--text-muted);
+}
+.patient-error .material-icons-round {
+  font-size: 56px;
+  color: var(--danger);
+  margin-bottom: 12px;
+}
+.patient-error h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.patient-error p {
+  font-size: 14px;
+}
+
+/* ============================================
+   TERAPIS DASHBOARD WELCOME
+   ============================================ */
+.welcome-banner {
+  background: linear-gradient(135deg, var(--primary), #06b6d4);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
+  color: #fff;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.welcome-banner::after {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 150px;
+  height: 150px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+.welcome-banner::before {
+  content: '';
+  position: absolute;
+  bottom: -50px;
+  right: 60px;
+  width: 200px;
+  height: 200px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+}
+.welcome-banner h1 {
+  font-size: 22px;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+.welcome-banner p {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-top: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
@@ -887,6 +1247,11 @@ tbody tr:last-child td { border-bottom: none; }
   .timeline-card { max-width: 100%; }
   table { font-size: 12px; }
   thead th, tbody td { padding: 8px 10px; }
+  .patient-search-form { flex-direction: column; }
+  .patient-info-grid { grid-template-columns: 1fr; }
+  .patient-summary-stats { grid-template-columns: repeat(2, 1fr); }
+  .patient-check-hero h1 { font-size: 22px; }
+  .welcome-banner { padding: 20px; }
 }
 </style>
 </head>
@@ -912,11 +1277,51 @@ tbody tr:last-child td { border-bottom: none; }
     
     <div class="form-group" style="margin-bottom: 24px;">
       <label>Password</label>
-      <input type="password" id="loginPassword" placeholder="Masukkan password">
+      <input type="password" id="loginPassword" placeholder="Masukkan password" onkeydown="if(event.key==='Enter')handleLogin()">
     </div>
     
     <button class="btn btn-primary" onclick="handleLogin()" style="width: 100%; justify-content: center; padding: 12px;">
       <span class="material-icons-round">login</span> Masuk
+    </button>
+
+    <div class="login-divider">atau</div>
+
+    <button class="btn-patient-check" onclick="showPatientCheckPage()">
+      <span class="material-icons-round">person_search</span> Cek Status Pasien
+    </button>
+  </div>
+</div>
+
+<!-- ============================================
+     CEK STATUS PASIEN — HALAMAN PUBLIK
+     ============================================ -->
+<div id="patient-check-container" style="display: none;">
+  <div class="patient-check-hero">
+    <div class="hero-icon">
+      <span class="material-icons-round">health_and_safety</span>
+    </div>
+    <h1>Cek Status Pasien</h1>
+    <p>Masukkan ID Pasien untuk melihat rekap status terapi Anda</p>
+  </div>
+
+  <div class="patient-search-card">
+    <div class="patient-search-form">
+      <input type="text" id="patientCheckId" placeholder="Contoh: PSN001" onkeydown="if(event.key==='Enter')searchPatientStatus()">
+      <button onclick="searchPatientStatus()">
+        <span class="material-icons-round">search</span> Cek
+      </button>
+    </div>
+    <div class="patient-search-hint">
+      <span class="material-icons-round" style="font-size:14px">info</span>
+      ID Pasien bisa dilihat pada kartu pendaftaran atau struk terapi Anda
+    </div>
+  </div>
+
+  <div class="patient-result-area" id="patientResultArea"></div>
+
+  <div style="text-align: center; margin-top: 8px;">
+    <button class="patient-back-btn" onclick="backToLoginFromPatientCheck()">
+      <span class="material-icons-round">arrow_back</span> Kembali ke Halaman Login
     </button>
   </div>
 </div>
@@ -954,6 +1359,9 @@ tbody tr:last-child td { border-bottom: none; }
     <button class="nav-item" data-page="laporan" onclick="navigateTo('laporan')">
       <span class="material-icons-round">bar_chart</span> Laporan
     </button>
+    <button class="nav-item" data-page="cekpasien" onclick="navigateTo('cekpasien')">
+      <span class="material-icons-round">person_search</span> Cek Pasien
+    </button>
     <button class="nav-item" onclick="logout()" style="color: var(--danger); margin-left: auto;">
       <span class="material-icons-round">logout</span> Keluar
     </button>
@@ -990,6 +1398,9 @@ tbody tr:last-child td { border-bottom: none; }
   <button class="nav-item" data-page="laporan" onclick="navigateTo('laporan');toggleMobileMenu();">
     <span class="material-icons-round">bar_chart</span> Laporan
   </button>
+  <button class="nav-item" data-page="cekpasien" onclick="navigateTo('cekpasien');toggleMobileMenu();">
+    <span class="material-icons-round">person_search</span> Cek Pasien
+  </button>
   <button class="nav-item" onclick="logout();toggleMobileMenu();" style="color: var(--danger); margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
     <span class="material-icons-round">logout</span> Keluar
   </button>
@@ -1018,15 +1429,8 @@ tbody tr:last-child td { border-bottom: none; }
 
 <!-- PAGE: DASHBOARD -->
 <div class="page active" id="page-dashboard">
-  <div class="page-header">
-    <div>
-      <h1>Dashboard</h1>
-      <p>Ringkasan aktivitas klinik hari ini</p>
-    </div>
-    <div class="header-actions">
-      <button class="btn btn-primary" onclick="openPendaftaranForm()"><span class="material-icons-round">person_add</span> Daftarkan Pasien</button>
-    </div>
-  </div>
+  <!-- Welcome banner (role-specific) -->
+  <div id="dashboardWelcome"></div>
 
   <div class="stat-grid">
     <div class="stat-card">
@@ -1034,11 +1438,11 @@ tbody tr:last-child td { border-bottom: none; }
       <div class="stat-value" id="statTotalPasien">0</div>
     </div>
     <div class="stat-card accent">
-      <div class="stat-label">Sesi Hari Ini</div>
+      <div class="stat-label" id="statSesiLabel">Sesi Hari Ini</div>
       <div class="stat-value" id="statSesiHariIni">0</div>
     </div>
     <div class="stat-card danger">
-      <div class="stat-label">Menunggu Antrian</div>
+      <div class="stat-label" id="statMenungguLabel">Menunggu Antrian</div>
       <div class="stat-value" id="statMenunggu">0</div>
       <span class="stat-badge badge-danger" id="badgeAntrian" style="display:none">Padat</span>
     </div>
@@ -1050,7 +1454,7 @@ tbody tr:last-child td { border-bottom: none; }
 
   <div class="card">
     <div class="card-header">
-      <h2>Sesi Pasien</h2>
+      <h2 id="dashboardTableTitle">Sesi Pasien</h2>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <div class="filter-tabs">
           <button class="filter-tab active" onclick="filterDashboard('semua', this)">Semua</button>
@@ -1276,7 +1680,24 @@ tbody tr:last-child td { border-bottom: none; }
   </div>
 </div>
 
-
+<!-- PAGE: CEK PASIEN (dalam app, untuk Admin/Terapis) -->
+<div class="page" id="page-cekpasien">
+  <div class="page-header">
+    <div>
+      <h1>Cek Status Pasien</h1>
+      <p>Lihat rekap status terapi pasien berdasarkan ID Pasien</p>
+    </div>
+  </div>
+  <div class="patient-search-card" style="margin: 0 0 24px; max-width: 100%;">
+    <div class="patient-search-form">
+      <input type="text" id="appPatientCheckId" placeholder="Masukkan ID Pasien (contoh: PSN001)" onkeydown="if(event.key==='Enter')searchPatientStatusInApp()">
+      <button onclick="searchPatientStatusInApp()">
+        <span class="material-icons-round">search</span> Cek Status
+      </button>
+    </div>
+  </div>
+  <div id="appPatientResultArea"></div>
+</div>
 
 </div><!-- end main-content -->
 
@@ -1475,6 +1896,7 @@ function renderPage(page) {
     case 'terapis': renderTerapisGrid(); break;
     case 'jenisterapi': renderJenisTerapiGrid(); break;
     case 'laporan': renderLaporan(); break;
+    case 'cekpasien': break; // no auto-render needed
   }
 }
 
@@ -1482,21 +1904,70 @@ function renderPage(page) {
 // DASHBOARD
 // ============================================
 function renderDashboard() {
-  var totalPasien = DB.Pasien.length;
+  var role = currentUser ? currentUser.Role : 'Admin';
   var todayStr = formatDate(new Date());
-  var jadwalToday = DB.Jadwal.filter(function(j) { return j.Tanggal === todayStr; });
-  var menunggu = jadwalToday.filter(function(j) { return j.Status === 'Menunggu'; }).length;
-  var selesai = jadwalToday.filter(function(j) { return j.Status === 'Selesai'; }).length;
+  var welcomeEl = document.getElementById('dashboardWelcome');
 
-  document.getElementById('statTotalPasien').textContent = totalPasien;
-  document.getElementById('statSesiHariIni').textContent = jadwalToday.length;
-  document.getElementById('statMenunggu').textContent = menunggu;
-  document.getElementById('statSelesai').textContent = selesai;
+  if (role === 'Terapis') {
+    // --- DASHBOARD TERAPIS ---
+    var terapisName = currentUser.Nama_Lengkap;
+    welcomeEl.innerHTML = '<div class="welcome-banner">' +
+      '<h1>👋 Selamat datang, ' + terapisName + '</h1>' +
+      '<p>Dashboard terapis — data sesi Anda hari ini</p>' +
+    '</div>';
 
-  var badge = document.getElementById('badgeAntrian');
-  if (menunggu >= 5) { badge.style.display = 'inline-block'; badge.textContent = 'Padat'; }
-  else if (menunggu >= 3) { badge.style.display = 'inline-block'; badge.textContent = 'Sedang'; badge.className = 'stat-badge badge-warning'; }
-  else { badge.style.display = 'none'; }
+    // Filter hanya jadwal milik terapis ini
+    var myJadwalToday = DB.Jadwal.filter(function(j) {
+      return j.Tanggal === todayStr && j.Terapis === terapisName;
+    });
+    var myMenunggu = myJadwalToday.filter(function(j) { return j.Status === 'Menunggu'; }).length;
+    var mySelesai = myJadwalToday.filter(function(j) { return j.Status === 'Selesai'; }).length;
+    var myDalamProses = myJadwalToday.filter(function(j) { return j.Status === 'Dalam Proses'; }).length;
+
+    // Total pasien unik yang ditangani terapis
+    var uniquePatients = {};
+    DB.Jadwal.filter(function(j) { return j.Terapis === terapisName; }).forEach(function(j) {
+      uniquePatients[j.ID_Pasien] = true;
+    });
+
+    document.getElementById('statTotalPasien').textContent = Object.keys(uniquePatients).length;
+    document.getElementById('statSesiHariIni').textContent = myJadwalToday.length;
+    document.getElementById('statSesiLabel').textContent = 'Sesi Saya Hari Ini';
+    document.getElementById('statMenunggu').textContent = myMenunggu;
+    document.getElementById('statMenungguLabel').textContent = 'Menunggu (Saya)';
+    document.getElementById('statSelesai').textContent = mySelesai;
+    document.getElementById('dashboardTableTitle').textContent = 'Sesi Pasien Saya';
+
+    var badge = document.getElementById('badgeAntrian');
+    if (myMenunggu >= 3) { badge.style.display = 'inline-block'; badge.textContent = 'Padat'; }
+    else { badge.style.display = 'none'; }
+
+  } else {
+    // --- DASHBOARD ADMIN ---
+    var adminName = currentUser ? currentUser.Nama_Lengkap : 'Admin';
+    welcomeEl.innerHTML = '<div class="welcome-banner">' +
+      '<h1>👋 Selamat datang, ' + adminName + '</h1>' +
+      '<p>Ringkasan aktivitas klinik hari ini</p>' +
+    '</div>';
+
+    var totalPasien = DB.Pasien.length;
+    var jadwalToday = DB.Jadwal.filter(function(j) { return j.Tanggal === todayStr; });
+    var menunggu = jadwalToday.filter(function(j) { return j.Status === 'Menunggu'; }).length;
+    var selesai = jadwalToday.filter(function(j) { return j.Status === 'Selesai'; }).length;
+
+    document.getElementById('statTotalPasien').textContent = totalPasien;
+    document.getElementById('statSesiHariIni').textContent = jadwalToday.length;
+    document.getElementById('statSesiLabel').textContent = 'Sesi Hari Ini';
+    document.getElementById('statMenunggu').textContent = menunggu;
+    document.getElementById('statMenungguLabel').textContent = 'Menunggu Antrian';
+    document.getElementById('statSelesai').textContent = selesai;
+    document.getElementById('dashboardTableTitle').textContent = 'Sesi Pasien';
+
+    var badge = document.getElementById('badgeAntrian');
+    if (menunggu >= 5) { badge.style.display = 'inline-block'; badge.textContent = 'Padat'; }
+    else if (menunggu >= 3) { badge.style.display = 'inline-block'; badge.textContent = 'Sedang'; badge.className = 'stat-badge badge-warning'; }
+    else { badge.style.display = 'none'; }
+  }
 
   renderDashboardTable();
 }
@@ -1511,10 +1982,15 @@ function filterDashboard(filter, btn) {
 function renderDashboardTable() {
   var tbody = document.getElementById('dashboardTableBody');
   var search = (document.getElementById('searchDashboard').value || '').toLowerCase();
+  var role = currentUser ? currentUser.Role : 'Admin';
+  var terapisName = currentUser ? currentUser.Nama_Lengkap : '';
+
   var rows = DB.Jadwal.filter(function(j) {
     var matchFilter = dashboardFilter === 'semua' || j.Status.toLowerCase() === dashboardFilter;
     var matchSearch = !search || j.Nama_Pasien.toLowerCase().indexOf(search) !== -1 || j.ID_Pasien.toLowerCase().indexOf(search) !== -1;
-    return matchFilter && matchSearch;
+    // Terapis hanya melihat jadwal miliknya
+    var matchRole = role !== 'Terapis' || j.Terapis === terapisName;
+    return matchFilter && matchSearch && matchRole;
   });
 
   if (rows.length === 0) {
@@ -2315,12 +2791,14 @@ function showLogin() {
   document.getElementById('login-container').style.display = 'flex';
   document.getElementById('app-navbar').style.display = 'none';
   document.getElementById('app-content').style.display = 'none';
+  document.getElementById('patient-check-container').style.display = 'none';
 }
 
 function showApp() {
   document.getElementById('login-container').style.display = 'none';
   document.getElementById('app-navbar').style.display = 'flex';
   document.getElementById('app-content').style.display = 'block';
+  document.getElementById('patient-check-container').style.display = 'none';
   
   updateNavbarVisibility();
   
@@ -2379,6 +2857,181 @@ function updateNavbarVisibility() {
       item.style.display = '';
     }
   });
+}
+
+// ============================================
+// CEK STATUS PASIEN — PUBLIK (dari login)
+// ============================================
+function showPatientCheckPage() {
+  document.getElementById('login-container').style.display = 'none';
+  document.getElementById('app-navbar').style.display = 'none';
+  document.getElementById('app-content').style.display = 'none';
+  document.getElementById('patient-check-container').style.display = 'block';
+  document.getElementById('patientCheckId').value = '';
+  document.getElementById('patientResultArea').innerHTML = '';
+}
+
+function backToLoginFromPatientCheck() {
+  document.getElementById('patient-check-container').style.display = 'none';
+  showLogin();
+}
+
+function searchPatientStatus() {
+  var id = document.getElementById('patientCheckId').value.trim().toUpperCase();
+  if (!id) {
+    showToast('error', 'Masukkan ID Pasien terlebih dahulu');
+    return;
+  }
+
+  var resultArea = document.getElementById('patientResultArea');
+
+  // Coba fetch dari GAS jika tersedia, fallback ke lokal
+  if (GAS_URL) {
+    resultArea.innerHTML = '<div style="text-align:center;padding:40px;"><span class="material-icons-round" style="font-size:36px;color:var(--primary);animation:pulse 1s infinite">hourglass_top</span><p style="margin-top:8px;color:var(--text-secondary)">Memuat data...</p></div>';
+    fetch(GAS_URL + '?action=getPatientStatus&idPasien=' + encodeURIComponent(id))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data.found) {
+          renderPatientResult(resultArea, data);
+        } else {
+          // Fallback ke data lokal
+          renderPatientResultLocal(resultArea, id);
+        }
+      })
+      .catch(function() {
+        // Fallback ke data lokal jika fetch gagal
+        renderPatientResultLocal(resultArea, id);
+      });
+  } else {
+    renderPatientResultLocal(resultArea, id);
+  }
+}
+
+function renderPatientResultLocal(container, id) {
+  var pasien = DB.Pasien.find(function(p) { return p.ID_Pasien.toUpperCase() === id; });
+  if (!pasien) {
+    container.innerHTML = '<div class="patient-error">' +
+      '<span class="material-icons-round">person_off</span>' +
+      '<h3>ID Pasien Tidak Ditemukan</h3>' +
+      '<p>Pastikan ID Pasien yang Anda masukkan benar. Contoh: PSN001</p>' +
+    '</div>';
+    return;
+  }
+
+  var jadwal = DB.Jadwal.filter(function(j) { return j.ID_Pasien === pasien.ID_Pasien; });
+  var rekamMedis = DB.RekamMedis.filter(function(r) { return r.ID_Pasien === pasien.ID_Pasien; });
+
+  var data = {
+    found: true,
+    pasien: pasien,
+    jadwal: jadwal,
+    rekamMedis: rekamMedis
+  };
+
+  renderPatientResult(container, data);
+}
+
+function renderPatientResult(container, data) {
+  var p = data.pasien;
+  var jadwal = data.jadwal || [];
+  var rm = data.rekamMedis || [];
+
+  // Statistik ringkasan
+  var totalSesi = jadwal.length;
+  var sesiSelesai = jadwal.filter(function(j) { return j.Status === 'Selesai'; }).length;
+  var sesiMenunggu = jadwal.filter(function(j) { return j.Status === 'Menunggu'; }).length;
+  var sesiProses = jadwal.filter(function(j) { return j.Status === 'Dalam Proses'; }).length;
+
+  // Inisial nama
+  var initials = (p.Nama || '').split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
+
+  var html = '';
+
+  // Card Info Pasien
+  html += '<div class="patient-info-card">' +
+    '<div class="patient-info-header">' +
+      '<div class="patient-avatar-lg">' + initials + '</div>' +
+      '<div class="patient-info-name">' +
+        '<h2>' + (p.Nama || '-') + '</h2>' +
+        '<p>' + (p.ID_Pasien || '-') + ' • ' + (p.Status || '-') + '</p>' +
+      '</div>' +
+    '</div>' +
+    '<div class="patient-info-grid">' +
+      '<div class="info-item"><div class="info-label">Jenis Kelamin</div><div class="info-value">' + (p.Jenis_Kelamin || '-') + '</div></div>' +
+      '<div class="info-item"><div class="info-label">No. HP</div><div class="info-value">' + (p.No_HP || '-') + '</div></div>' +
+      '<div class="info-item"><div class="info-label">Keluhan</div><div class="info-value">' + (p.Keluhan || '-') + '</div></div>' +
+      '<div class="info-item"><div class="info-label">Tanggal Daftar</div><div class="info-value">' + formatDateDisplay(p.Tgl_Daftar) + '</div></div>' +
+    '</div>' +
+  '</div>';
+
+  // Statistik Ringkasan
+  html += '<div class="patient-summary-stats">' +
+    '<div class="summary-stat teal"><div class="ss-value">' + totalSesi + '</div><div class="ss-label">Total Sesi</div></div>' +
+    '<div class="summary-stat green"><div class="ss-value">' + sesiSelesai + '</div><div class="ss-label">Selesai</div></div>' +
+    '<div class="summary-stat amber"><div class="ss-value">' + sesiMenunggu + '</div><div class="ss-label">Menunggu</div></div>' +
+    '<div class="summary-stat blue"><div class="ss-value">' + sesiProses + '</div><div class="ss-label">Dalam Proses</div></div>' +
+  '</div>';
+
+  // Riwayat Jadwal Terapi
+  html += '<div class="patient-history-card">' +
+    '<div class="card-header"><h2><span class="material-icons-round" style="font-size:18px;vertical-align:middle;margin-right:6px;color:var(--primary)">calendar_today</span>Riwayat Jadwal Terapi</h2></div>' +
+    '<div class="card-body no-pad"><div class="table-wrapper"><table>' +
+    '<thead><tr><th>Tanggal</th><th>Jam</th><th>Jenis Terapi</th><th>Terapis</th><th>Ruang</th><th>Status</th></tr></thead><tbody>';
+
+  if (jadwal.length === 0) {
+    html += '<tr><td colspan="6"><div class="empty-state"><span class="material-icons-round">event_busy</span><p>Belum ada jadwal terapi</p></div></td></tr>';
+  } else {
+    jadwal.forEach(function(j) {
+      var sc = j.Status === 'Menunggu' ? 'status-menunggu' : j.Status === 'Dalam Proses' ? 'status-proses' : j.Status === 'Selesai' ? 'status-selesai' : 'status-batal';
+      html += '<tr>' +
+        '<td>' + formatDateDisplay(j.Tanggal) + '</td>' +
+        '<td>' + (j.Jam || '-') + '</td>' +
+        '<td>' + (j.Jenis_Terapi || '-') + '</td>' +
+        '<td>' + (j.Terapis || '-') + '</td>' +
+        '<td>' + (j.Ruang || '-') + '</td>' +
+        '<td><span class="status ' + sc + '">' + j.Status + '</span></td>' +
+      '</tr>';
+    });
+  }
+  html += '</tbody></table></div></div></div>';
+
+  // Riwayat Rekam Medis
+  html += '<div class="patient-history-card">' +
+    '<div class="card-header"><h2><span class="material-icons-round" style="font-size:18px;vertical-align:middle;margin-right:6px;color:var(--primary)">folder_shared</span>Riwayat Rekam Medis</h2></div>' +
+    '<div class="card-body no-pad"><div class="table-wrapper"><table>' +
+    '<thead><tr><th>ID Rekam</th><th>Diagnosa</th><th>Rekomendasi Terapi</th><th>Pemeriksa</th><th>Tgl Periksa</th><th>Status</th></tr></thead><tbody>';
+
+  if (rm.length === 0) {
+    html += '<tr><td colspan="6"><div class="empty-state"><span class="material-icons-round">folder_off</span><p>Belum ada rekam medis</p></div></td></tr>';
+  } else {
+    rm.forEach(function(r) {
+      var sc = r.Status === 'Aktif' ? 'status-aktif' : 'status-selesai';
+      html += '<tr>' +
+        '<td>' + (r.ID_Rekam || '-') + '</td>' +
+        '<td>' + (r.Diagnosa || '-') + '</td>' +
+        '<td>' + (r.Rekomendasi_Terapi || '-') + '</td>' +
+        '<td>' + (r.Pemeriksa || '-') + '</td>' +
+        '<td>' + formatDateDisplay(r.Tgl_Periksa) + '</td>' +
+        '<td><span class="status ' + sc + '">' + r.Status + '</span></td>' +
+      '</tr>';
+    });
+  }
+  html += '</tbody></table></div></div></div>';
+
+  container.innerHTML = html;
+}
+
+// ============================================
+// CEK STATUS PASIEN — DALAM APP (Admin/Terapis)
+// ============================================
+function searchPatientStatusInApp() {
+  var id = document.getElementById('appPatientCheckId').value.trim().toUpperCase();
+  if (!id) {
+    showToast('error', 'Masukkan ID Pasien terlebih dahulu');
+    return;
+  }
+  var resultArea = document.getElementById('appPatientResultArea');
+  renderPatientResultLocal(resultArea, id);
 }
 
 // ============================================

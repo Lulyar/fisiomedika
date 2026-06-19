@@ -23,6 +23,9 @@ function doGet(e) {
         result = deleteData(sheetName, keyData);
       } else if (action === 'getSheetStats') {
         result = getSheetStats();
+      } else if (action === 'getPatientStatus') {
+        var idPasien = e.parameter.idPasien;
+        result = getPatientStatus(idPasien);
       } else {
         result = { error: 'Unknown action: ' + action };
       }
@@ -263,3 +266,76 @@ function getSheetStats() {
   
   return stats;
 }
+
+// ============================================
+// CEK STATUS PASIEN (PUBLIK)
+// ============================================
+
+function getPatientStatus(idPasien) {
+  if (!idPasien) return { error: 'ID Pasien wajib diisi' };
+  
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var result = { found: false };
+  
+  // Cari data pasien
+  var pSheet = ss.getSheetByName('Pasien');
+  if (pSheet && pSheet.getLastRow() >= 2) {
+    var pData = pSheet.getDataRange().getValues();
+    var pHeaders = SHEET_CONFIG['Pasien'].headers;
+    for (var i = 1; i < pData.length; i++) {
+      if (String(pData[i][0]) === String(idPasien)) {
+        result.found = true;
+        result.pasien = {};
+        for (var j = 0; j < pHeaders.length; j++) {
+          // Sembunyikan KTP/NIK dari view publik
+          if (pHeaders[j] !== 'KTP_NIK') {
+            result.pasien[pHeaders[j]] = String(pData[i][j] || '');
+          }
+        }
+        break;
+      }
+    }
+  }
+  
+  if (!result.found) return { found: false, error: 'ID Pasien tidak ditemukan' };
+  
+  // Ambil jadwal pasien
+  result.jadwal = [];
+  var jSheet = ss.getSheetByName('Jadwal');
+  if (jSheet && jSheet.getLastRow() >= 2) {
+    var jData = jSheet.getDataRange().getValues();
+    var jHeaders = SHEET_CONFIG['Jadwal'].headers;
+    for (var i = 1; i < jData.length; i++) {
+      if (String(jData[i][1]) === String(idPasien)) {
+        var row = {};
+        for (var j = 0; j < jHeaders.length; j++) {
+          row[jHeaders[j]] = String(jData[i][j] || '');
+        }
+        result.jadwal.push(row);
+      }
+    }
+  }
+  
+  // Ambil rekam medis pasien
+  result.rekamMedis = [];
+  var rSheet = ss.getSheetByName('RekamMedis');
+  if (rSheet && rSheet.getLastRow() >= 2) {
+    var rData = rSheet.getDataRange().getValues();
+    var rHeaders = SHEET_CONFIG['RekamMedis'].headers;
+    for (var i = 1; i < rData.length; i++) {
+      if (String(rData[i][1]) === String(idPasien)) {
+        var row = {};
+        for (var j = 0; j < rHeaders.length; j++) {
+          // Sembunyikan catatan internal dari pasien
+          if (rHeaders[j] !== 'Catatan') {
+            row[rHeaders[j]] = String(rData[i][j] || '');
+          }
+        }
+        result.rekamMedis.push(row);
+      }
+    }
+  }
+  
+  return result;
+}
+
