@@ -893,9 +893,38 @@ tbody tr:last-child td { border-bottom: none; }
 <body>
 
 <!-- ============================================
+     LOGIN CONTAINER
+     ============================================ -->
+<div id="login-container" style="display: none; min-height: 100vh; align-items: center; justify-content: center; background: var(--bg); padding: 20px;">
+  <div class="card" style="width: 100%; max-width: 400px; padding: 32px; box-shadow: var(--shadow-lg); border-radius: var(--radius-xl);">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <div style="width: 48px; height: 48px; background: var(--primary); border-radius: var(--radius); display: inline-flex; align-items: center; justify-content: center; font-size: 24px; color: #fff; margin-bottom: 12px;">
+        <span class="material-icons-round">local_hospital</span>
+      </div>
+      <h2 style="font-size: 20px; font-weight: 700;">Fisio Medika</h2>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Sistem Manajemen Klinik Fisioterapi</p>
+    </div>
+    
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="loginUsername" placeholder="Masukkan username">
+    </div>
+    
+    <div class="form-group" style="margin-bottom: 24px;">
+      <label>Password</label>
+      <input type="password" id="loginPassword" placeholder="Masukkan password">
+    </div>
+    
+    <button class="btn btn-primary" onclick="handleLogin()" style="width: 100%; justify-content: center; padding: 12px;">
+      <span class="material-icons-round">login</span> Masuk
+    </button>
+  </div>
+</div>
+
+<!-- ============================================
      NAVBAR
      ============================================ -->
-<nav class="navbar">
+<nav class="navbar" id="app-navbar" style="display: none;">
   <div class="navbar-brand">
     <div class="logo-icon"><span class="material-icons-round">local_hospital</span></div>
     <span>Fisio Medika</span>
@@ -924,6 +953,9 @@ tbody tr:last-child td { border-bottom: none; }
     </button>
     <button class="nav-item" data-page="laporan" onclick="navigateTo('laporan')">
       <span class="material-icons-round">bar_chart</span> Laporan
+    </button>
+    <button class="nav-item" onclick="logout()" style="color: var(--danger); margin-left: auto;">
+      <span class="material-icons-round">logout</span> Keluar
     </button>
   </div>
   <button class="hamburger" onclick="toggleMobileMenu()">
@@ -958,6 +990,9 @@ tbody tr:last-child td { border-bottom: none; }
   <button class="nav-item" data-page="laporan" onclick="navigateTo('laporan');toggleMobileMenu();">
     <span class="material-icons-round">bar_chart</span> Laporan
   </button>
+  <button class="nav-item" onclick="logout();toggleMobileMenu();" style="color: var(--danger); margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
+    <span class="material-icons-round">logout</span> Keluar
+  </button>
 </div>
 
 <!-- Toast Container -->
@@ -979,7 +1014,7 @@ tbody tr:last-child td { border-bottom: none; }
 <!-- ============================================
      MAIN CONTENT PAGES
      ============================================ -->
-<div class="main-content">
+<div class="main-content" id="app-content" style="display: none;">
 
 <!-- PAGE: DASHBOARD -->
 <div class="page active" id="page-dashboard">
@@ -1381,7 +1416,8 @@ function initDummyData() {
   DB.Terapis = terapisData;
   DB.JenisTerapi = jenisTerapiData;
   DB.Users = [
-    { Username:'admin', Password:'admin123', Nama_Lengkap:'Administrator', Role:'Admin' }
+    { Username:'admin', Password:'admin123', Nama_Lengkap:'Administrator', Role:'Admin' },
+    { Username:'terapis', Password:'terapis123', Nama_Lengkap:'Dr. Linda Permata, S.Ft', Role:'Terapis' }
   ];
 }
 
@@ -2271,11 +2307,94 @@ function showToast(type, message) {
 }
 
 // ============================================
+// LOGIN, LOGOUT & ROLE PERMISSIONS
+// ============================================
+var currentUser = null;
+
+function showLogin() {
+  document.getElementById('login-container').style.display = 'flex';
+  document.getElementById('app-navbar').style.display = 'none';
+  document.getElementById('app-content').style.display = 'none';
+}
+
+function showApp() {
+  document.getElementById('login-container').style.display = 'none';
+  document.getElementById('app-navbar').style.display = 'flex';
+  document.getElementById('app-content').style.display = 'block';
+  
+  updateNavbarVisibility();
+  
+  // Sinkronisasi data dari Google Sheets jika online
+  syncData();
+  
+  // Arahkan ke dashboard secara default
+  navigateTo('dashboard');
+}
+
+function handleLogin() {
+  var user = document.getElementById('loginUsername').value.trim();
+  var pass = document.getElementById('loginPassword').value;
+  
+  if (!user || !pass) {
+    showToast('error', 'Username dan password wajib diisi');
+    return;
+  }
+  
+  // Verifikasi ke lokal DB.Users
+  var found = DB.Users.find(function(u) {
+    return u.Username.toLowerCase() === user.toLowerCase() && u.Password === pass;
+  });
+  
+  if (found) {
+    currentUser = found;
+    sessionStorage.setItem('currentUser', JSON.stringify(found));
+    showToast('success', 'Selamat datang, ' + found.Nama_Lengkap + ' (' + found.Role + ')');
+    showApp();
+  } else {
+    showToast('error', 'Username atau password salah');
+  }
+}
+
+function logout() {
+  currentUser = null;
+  sessionStorage.removeItem('currentUser');
+  showToast('info', 'Anda telah keluar dari sistem');
+  
+  // Kosongkan form input login
+  document.getElementById('loginUsername').value = '';
+  document.getElementById('loginPassword').value = '';
+  
+  showLogin();
+}
+
+function updateNavbarVisibility() {
+  var role = currentUser ? currentUser.Role : null;
+  document.querySelectorAll('.nav-item').forEach(function(item) {
+    var page = item.getAttribute('data-page');
+    // Halaman yang disembunyikan untuk Terapis
+    var adminOnlyPages = ['pendaftaran', 'pasien', 'laporan'];
+    if (role === 'Terapis' && adminOnlyPages.indexOf(page) !== -1) {
+      item.style.display = 'none';
+    } else {
+      item.style.display = '';
+    }
+  });
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 function init() {
   initDummyData();
-  renderDashboard();
+  
+  // Periksa sesi aktif
+  var sessionUser = sessionStorage.getItem('currentUser');
+  if (sessionUser) {
+    currentUser = JSON.parse(sessionUser);
+    showApp();
+  } else {
+    showLogin();
+  }
 }
 
 // Run on page load
