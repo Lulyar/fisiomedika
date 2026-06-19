@@ -1306,7 +1306,7 @@ tbody tr:last-child td { border-bottom: none; }
 
   <div class="patient-search-card">
     <div class="patient-search-form">
-      <input type="text" id="patientCheckId" placeholder="Contoh: PSN001" onkeydown="if(event.key==='Enter')searchPatientStatus()">
+      <input type="text" id="patientCheckId" placeholder="Contoh: PSN003" onkeydown="if(event.key==='Enter')searchPatientStatus()">
       <button onclick="searchPatientStatus()">
         <span class="material-icons-round">search</span> Cek
       </button>
@@ -1690,7 +1690,7 @@ tbody tr:last-child td { border-bottom: none; }
   </div>
   <div class="patient-search-card" style="margin: 0 0 24px; max-width: 100%;">
     <div class="patient-search-form">
-      <input type="text" id="appPatientCheckId" placeholder="Masukkan ID Pasien (contoh: PSN001)" onkeydown="if(event.key==='Enter')searchPatientStatusInApp()">
+      <input type="text" id="appPatientCheckId" placeholder="Masukkan ID Pasien (contoh: PSN003)" onkeydown="if(event.key==='Enter')searchPatientStatusInApp()">
       <button onclick="searchPatientStatusInApp()">
         <span class="material-icons-round">search</span> Cek Status
       </button>
@@ -1756,10 +1756,7 @@ function initDummyData() {
   ];
 
   var terapisData = [
-    { ID_Terapis:'TRP001', Nama:'Dr. Ratna Sari, S.Ft', Spesialisasi:'Muskuloskeletal', Deskripsi:'Spesialis fisioterapi muskuloskeletal dengan 8 tahun pengalaman', Shift_Mulai:'08:00', Shift_Selesai:'15:00', Total_Sesi:'342', Pasien_Hari_Ini:'5' },
-    { ID_Terapis:'TRP002', Nama:'Dr. Agus Hermawan, S.Ft', Spesialisasi:'Neurologi', Deskripsi:'Ahli rehabilitasi neurologis dan pemulihan stroke', Shift_Mulai:'08:00', Shift_Selesai:'15:00', Total_Sesi:'287', Pasien_Hari_Ini:'4' },
-    { ID_Terapis:'TRP003', Nama:'Dr. Linda Permata, S.Ft', Spesialisasi:'Pediatri', Deskripsi:'Fisioterapis anak dengan pendekatan bermain terapeutik', Shift_Mulai:'09:00', Shift_Selesai:'16:00', Total_Sesi:'198', Pasien_Hari_Ini:'3' },
-    { ID_Terapis:'TRP004', Nama:'Dr. Irfan Maulana, S.Ft', Spesialisasi:'Olahraga', Deskripsi:'Spesialis cedera olahraga dan rehabilitasi atlet profesional', Shift_Mulai:'10:00', Shift_Selesai:'17:00', Total_Sesi:'256', Pasien_Hari_Ini:'4' }
+    { ID_Terapis:'TRP001', Nama:'Andini Nirmala Cahya, S.Kes', Spesialisasi:'Muskuloskeletal, Neurologi, Pediatri, Olahraga', Deskripsi:'Spesialis fisioterapi muskuloskeletal, rehabilitasi neurologis, pediatri, dan cedera olahraga', Shift_Mulai:'08:00', Shift_Selesai:'17:00', Total_Sesi:'1083', Pasien_Hari_Ini:'16' }
   ];
 
   var jenisTerapiData = [
@@ -1838,7 +1835,7 @@ function initDummyData() {
   DB.JenisTerapi = jenisTerapiData;
   DB.Users = [
     { Username:'admin', Password:'admin123', Nama_Lengkap:'Administrator', Role:'Admin' },
-    { Username:'terapis', Password:'terapis123', Nama_Lengkap:'Dr. Linda Permata, S.Ft', Role:'Terapis' }
+    { Username:'terapis', Password:'terapis123', Nama_Lengkap:'Andini Nirmala Cahya, S.Kes', Role:'Terapis' }
   ];
 }
 
@@ -2913,7 +2910,7 @@ function renderPatientResultLocal(container, id) {
     container.innerHTML = '<div class="patient-error">' +
       '<span class="material-icons-round">person_off</span>' +
       '<h3>ID Pasien Tidak Ditemukan</h3>' +
-      '<p>Pastikan ID Pasien yang Anda masukkan benar. Contoh: PSN001</p>' +
+      '<p>Pastikan ID Pasien yang Anda masukkan benar. Contoh: PSN003</p>' +
     '</div>';
     return;
   }
